@@ -69,6 +69,7 @@ class AlienInvasion:
     def _create_fleet(self):
         alien = Alien(self)
         self.aliens.add(alien)
+        
 if __name__=='__main__':
     ai = AlienInvasion()
     ai.runGame()
