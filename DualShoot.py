@@ -20,7 +20,7 @@ pygame.display.set_caption("Dual Bullet Spaceship Shoot")
 clock = pygame.time.Clock()
 
 # Load spaceship image
-spaceship_img = pygame.image.load("player.png")
+spaceship_img = pygame.image.load("Images\player.png")
 spaceship_rect = spaceship_img.get_rect()
 spaceship_rect.center = (WIDTH // 2, HEIGHT - 50)
 
