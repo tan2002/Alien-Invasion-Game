@@ -16,7 +16,6 @@ class AlienInvasion:
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
-        self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
 
         self._create_fleet()
@@ -27,6 +26,7 @@ class AlienInvasion:
             self.ship.update()
             self.bullets.update()
             self._update_screen()
+            self.aliens.update()
             
     
     def _check_events(self):
@@ -64,11 +64,21 @@ class AlienInvasion:
         self.ship.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        self.aliens.update()
         self.aliens.draw(self.screen)
         pygame.display.flip()
 
     def _create_fleet(self):
+        # alien = Alien(self)
+        # self.aliens.add(alien)
+        for alien_number in range(number_of_alien):
+            self._create_alien(alien_number)
+    
+    def _create_alien(self,alien_number):
         alien = Alien(self)
+        alien_width = alien.rect.width
+        alien.x = alien_width + 2 * alien_width * alien_number
+        alien.rect.x = alien.x
         self.aliens.add(alien)
         
 if __name__=='__main__':
