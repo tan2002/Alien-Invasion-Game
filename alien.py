@@ -1,13 +1,14 @@
 import pygame
 from pygame.sprite import Sprite
 import random
+from datetime import datetime,timedelta
 class Alien(Sprite):
     def __init__(self,ai_game):
         super().__init__()
         self.screen = ai_game.screen
         self.settings = ai_game.settings
-        alien_images = ['Images/Alien1.png','Images/Alien2.png','Images/Alien3.png','Images/Alien4.png']
-        self.image = pygame.image.load(random.choice(alien_images))
+        self.alien_images = ['Images/Alien1.png','Images/Alien3.png']
+        self.image = pygame.image.load(random.choice(self.alien_images))
         self.rect = self.image.get_rect()
 
         self.rect.x = self.rect.width
