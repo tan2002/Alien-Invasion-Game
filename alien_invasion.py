@@ -15,11 +15,19 @@ class AlienInvasion:
         self.bg_color = (230,230,250)
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self)
+
         self.bullets = pygame.sprite.Group()
+        self.bullet_sound = pygame.mixer.Sound('Sounds/laser.wav')
+        
         self.aliens = pygame.sprite.Group()
+        self.alien_hit_sound = pygame.mixer.Sound('Sounds/explosion.wav')
         self._create_fleet()
 
     def runGame(self):
+        pygame.mixer.init()
+        background_music = pygame.mixer.Sound('Sounds/background.wav')
+        background_music.play(-1) 
+
         while True:
             self._check_events()
             self.ship.update()
@@ -53,6 +61,7 @@ class AlienInvasion:
             self.ship.moving_left = False
 
     def _fire_bullet(self):
+        self.bullet_sound.play()
         new_bullet1 = Bullet(self,self.settings.bullet1)
         new_bullet2 = Bullet(self,self.settings.bullet2)
 
@@ -71,6 +80,8 @@ class AlienInvasion:
         self.aliens.draw(self.screen)
 
         collisions = pygame.sprite.groupcollide(self.bullets,self.aliens,True,True)
+        for collision in collisions:
+            self.alien_hit_sound.play()
         pygame.display.flip()
 
     def _create_alien(self,alien_number,row_number):
