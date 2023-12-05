@@ -32,12 +32,14 @@ class AlienInvasion:
             self._check_events()
             self.ship.update()
             self.bullets.update()
+            self._update_bullets()
             self._update_aliens()
             self._update_screen()
             
     def _check_events(self):
         for event in pygame.event.get():
                 if event.type == pygame.QUIT:
+                    pygame.quit()
                     sys.exit()
                 elif event.type == pygame.KEYDOWN:
                     self._check_keydown_events(event)
@@ -65,10 +67,17 @@ class AlienInvasion:
         new_bullet1 = Bullet(self,self.settings.bullet1)
         new_bullet2 = Bullet(self,self.settings.bullet2)
 
-        new_bullet1.rect.x -= 25
-        new_bullet2.rect.x += 25
+        new_bullet1.rect.x = self.ship.rect.centerx - 25
+        new_bullet2.rect.x = self.ship.rect.centerx + 25
+        new_bullet1.rect.y = new_bullet2.rect.y = self.ship.rect.y
         self.bullets.add(new_bullet1,new_bullet2)
-
+    
+    def _update_bullets(self):
+        self.bullets.update()
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
+    
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
@@ -83,7 +92,7 @@ class AlienInvasion:
         for collision in collisions:
             self.alien_hit_sound.play()
         pygame.display.flip()
-
+    
     def _create_alien(self,alien_number,row_number):
         alien = Alien(self)
         alien_width,alien_height = alien.rect.size
